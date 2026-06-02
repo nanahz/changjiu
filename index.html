@@ -1,0 +1,1191 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>长九科技 · 手机销售与租赁</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;700;900&family=Noto+Sans+SC:wght@300;400;500;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --ink: #0d0d0d;
+      --paper: #f5f2ed;
+      --accent: #c8392b;
+      --accent2: #e8a020;
+      --muted: #7a7570;
+      --card-bg: #ffffff;
+      --border: #d8d3cc;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Noto Sans SC', sans-serif;
+      background: var(--paper);
+      color: var(--ink);
+      overflow-x: hidden;
+    }
+
+    /* ── NOISE TEXTURE OVERLAY ── */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 5vw;
+      height: 64px;
+      background: rgba(245,242,237,0.88);
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .nav-logo {
+      display: flex;
+      align-items: baseline;
+      gap: 8px;
+      text-decoration: none;
+    }
+    .nav-logo-cn {
+      font-family: 'Noto Serif SC', serif;
+      font-weight: 900;
+      font-size: 1.25rem;
+      color: var(--ink);
+      letter-spacing: 0.04em;
+    }
+    .nav-logo-dot {
+      width: 7px; height: 7px;
+      border-radius: 50%;
+      background: var(--accent);
+      display: inline-block;
+      margin-bottom: 2px;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 2rem;
+      list-style: none;
+    }
+    .nav-links a {
+      font-size: 0.85rem;
+      font-weight: 500;
+      color: var(--muted);
+      text-decoration: none;
+      letter-spacing: 0.06em;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--ink); }
+
+    .nav-cta {
+      background: var(--ink);
+      color: var(--paper) !important;
+      padding: 8px 20px;
+      border-radius: 2px;
+      font-size: 0.82rem !important;
+      letter-spacing: 0.08em !important;
+      transition: background 0.2s !important;
+    }
+    .nav-cta:hover { background: var(--accent) !important; color: #fff !important; }
+
+    /* ── HERO ── */
+    .hero {
+      position: relative;
+      min-height: 92vh;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      align-items: center;
+      padding: 0 5vw;
+      gap: 4rem;
+      overflow: hidden;
+    }
+
+    .hero-bg-circle {
+      position: absolute;
+      width: 700px; height: 700px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(200,57,43,0.08) 0%, transparent 70%);
+      right: -100px; top: 50%;
+      transform: translateY(-50%);
+      pointer-events: none;
+    }
+    .hero-grid-lines {
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(13,13,13,0.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(13,13,13,0.04) 1px, transparent 1px);
+      background-size: 60px 60px;
+      pointer-events: none;
+    }
+
+    .hero-left { position: relative; z-index: 1; }
+
+    .hero-eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-family: 'DM Mono', monospace;
+      font-size: 0.72rem;
+      letter-spacing: 0.15em;
+      color: var(--accent);
+      text-transform: uppercase;
+      margin-bottom: 1.5rem;
+      opacity: 0;
+      animation: fadeUp 0.6s 0.2s forwards;
+    }
+    .hero-eyebrow::before {
+      content: '';
+      display: block;
+      width: 24px; height: 1px;
+      background: var(--accent);
+    }
+
+    .hero-title {
+      font-family: 'Noto Serif SC', serif;
+      font-weight: 900;
+      font-size: clamp(2.8rem, 5vw, 4.8rem);
+      line-height: 1.08;
+      letter-spacing: -0.01em;
+      color: var(--ink);
+      opacity: 0;
+      animation: fadeUp 0.7s 0.35s forwards;
+    }
+    .hero-title em {
+      font-style: normal;
+      color: var(--accent);
+    }
+
+    .hero-sub {
+      margin-top: 1.5rem;
+      font-size: 1.05rem;
+      color: var(--muted);
+      line-height: 1.8;
+      max-width: 420px;
+      opacity: 0;
+      animation: fadeUp 0.7s 0.5s forwards;
+    }
+
+    .hero-actions {
+      margin-top: 2.5rem;
+      display: flex;
+      gap: 1rem;
+      align-items: center;
+      flex-wrap: wrap;
+      opacity: 0;
+      animation: fadeUp 0.7s 0.65s forwards;
+    }
+    .btn-primary {
+      background: var(--ink);
+      color: var(--paper);
+      padding: 14px 32px;
+      border: none;
+      border-radius: 2px;
+      font-family: 'Noto Sans SC', sans-serif;
+      font-size: 0.9rem;
+      font-weight: 500;
+      letter-spacing: 0.06em;
+      cursor: pointer;
+      text-decoration: none;
+      transition: background 0.25s, transform 0.2s;
+    }
+    .btn-primary:hover { background: var(--accent); transform: translateY(-2px); }
+
+    .btn-outline {
+      background: transparent;
+      color: var(--ink);
+      padding: 13px 28px;
+      border: 1.5px solid var(--border);
+      border-radius: 2px;
+      font-family: 'Noto Sans SC', sans-serif;
+      font-size: 0.9rem;
+      cursor: pointer;
+      text-decoration: none;
+      transition: border-color 0.25s, color 0.25s;
+    }
+    .btn-outline:hover { border-color: var(--ink); color: var(--ink); }
+
+    .hero-stats {
+      margin-top: 3.5rem;
+      display: flex;
+      gap: 3rem;
+      opacity: 0;
+      animation: fadeUp 0.7s 0.8s forwards;
+    }
+    .stat-item {}
+    .stat-num {
+      font-family: 'Noto Serif SC', serif;
+      font-size: 2rem;
+      font-weight: 900;
+      color: var(--ink);
+      line-height: 1;
+    }
+    .stat-num span { color: var(--accent); }
+    .stat-label {
+      font-size: 0.78rem;
+      color: var(--muted);
+      margin-top: 4px;
+      letter-spacing: 0.05em;
+    }
+
+    /* ── HERO RIGHT: PHONE SHOWCASE ── */
+    .hero-right {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      opacity: 0;
+      animation: fadeIn 1s 0.4s forwards;
+    }
+
+    .phone-showcase {
+      position: relative;
+      width: 320px;
+      height: 520px;
+    }
+
+    .phone-card {
+      position: absolute;
+      background: var(--card-bg);
+      border-radius: 24px;
+      box-shadow: 0 30px 80px rgba(13,13,13,0.12), 0 8px 20px rgba(13,13,13,0.06);
+      padding: 28px 24px;
+      transition: transform 0.4s ease;
+    }
+    .phone-card:hover { transform: translateY(-6px) rotate(0deg) !important; }
+
+    .phone-card-main {
+      width: 240px;
+      left: 40px; top: 20px;
+      z-index: 3;
+      transform: rotate(-2deg);
+    }
+    .phone-card-back {
+      width: 220px;
+      left: 60px; top: 60px;
+      z-index: 1;
+      transform: rotate(4deg);
+      background: #1a1a1a;
+      color: var(--paper);
+    }
+
+    .phone-brand-label {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.65rem;
+      letter-spacing: 0.14em;
+      color: var(--muted);
+      text-transform: uppercase;
+      margin-bottom: 12px;
+    }
+    .phone-card-back .phone-brand-label { color: #666; }
+
+    .phone-icon {
+      width: 56px; height: 56px;
+      border-radius: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.6rem;
+      margin-bottom: 16px;
+    }
+    .phone-icon-apple { background: #f0f0f0; }
+    .phone-icon-hw { background: #c8392b; }
+
+    .phone-name {
+      font-family: 'Noto Serif SC', serif;
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--ink);
+      margin-bottom: 6px;
+    }
+    .phone-card-back .phone-name { color: var(--paper); }
+
+    .phone-price-tag {
+      font-size: 0.82rem;
+      color: var(--muted);
+      margin-bottom: 16px;
+    }
+    .phone-price-tag strong { color: var(--accent); font-size: 1.1rem; }
+
+    .phone-badge {
+      display: inline-block;
+      background: var(--accent);
+      color: #fff;
+      font-size: 0.68rem;
+      letter-spacing: 0.08em;
+      padding: 3px 10px;
+      border-radius: 20px;
+    }
+
+    .floating-tag {
+      position: absolute;
+      background: var(--ink);
+      color: var(--paper);
+      font-family: 'DM Mono', monospace;
+      font-size: 0.7rem;
+      padding: 8px 14px;
+      border-radius: 8px;
+      z-index: 10;
+      white-space: nowrap;
+      box-shadow: 0 8px 24px rgba(13,13,13,0.2);
+      animation: float 3s ease-in-out infinite;
+    }
+    .floating-tag-1 { right: -10px; top: 10px; animation-delay: 0s; }
+    .floating-tag-2 { left: -20px; bottom: 80px; animation-delay: 1.5s; background: var(--accent2); color: var(--ink); }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-8px); }
+    }
+
+    /* ── BRANDS ── */
+    .brands-bar {
+      padding: 32px 5vw;
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      gap: 4rem;
+      flex-wrap: wrap;
+    }
+    .brands-label {
+      font-size: 0.75rem;
+      font-family: 'DM Mono', monospace;
+      color: var(--muted);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      white-space: nowrap;
+    }
+    .brands-list {
+      display: flex;
+      gap: 3rem;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+    .brand-item {
+      font-family: 'Noto Serif SC', serif;
+      font-weight: 700;
+      font-size: 1.1rem;
+      color: var(--muted);
+      letter-spacing: 0.05em;
+      transition: color 0.2s;
+      cursor: default;
+    }
+    .brand-item:hover { color: var(--ink); }
+    .brand-item.active { color: var(--ink); }
+
+    /* ── SECTION COMMON ── */
+    section { padding: 100px 5vw; position: relative; }
+    .section-label {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.72rem;
+      letter-spacing: 0.18em;
+      color: var(--accent);
+      text-transform: uppercase;
+      margin-bottom: 1rem;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .section-label::before { content: ''; display: block; width: 20px; height: 1px; background: var(--accent); }
+
+    .section-title {
+      font-family: 'Noto Serif SC', serif;
+      font-weight: 900;
+      font-size: clamp(1.8rem, 3vw, 2.8rem);
+      line-height: 1.15;
+      color: var(--ink);
+      margin-bottom: 1rem;
+    }
+    .section-desc {
+      font-size: 1rem;
+      color: var(--muted);
+      line-height: 1.8;
+      max-width: 500px;
+    }
+
+    /* ── SERVICES ── */
+    .services-section { background: var(--ink); color: var(--paper); }
+    .services-section .section-label { color: var(--accent2); }
+    .services-section .section-label::before { background: var(--accent2); }
+    .services-section .section-title { color: var(--paper); }
+    .services-section .section-desc { color: #888; }
+
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2px;
+      margin-top: 4rem;
+    }
+
+    .service-card {
+      background: #141414;
+      padding: 40px 36px;
+      position: relative;
+      overflow: hidden;
+      transition: background 0.3s;
+    }
+    .service-card:hover { background: #1c1c1c; }
+    .service-card::after {
+      content: '';
+      position: absolute;
+      bottom: 0; left: 0;
+      width: 0; height: 2px;
+      background: var(--accent);
+      transition: width 0.4s ease;
+    }
+    .service-card:hover::after { width: 100%; }
+
+    .service-num {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.68rem;
+      color: #444;
+      letter-spacing: 0.1em;
+      margin-bottom: 2rem;
+    }
+    .service-icon { font-size: 2.2rem; margin-bottom: 1.2rem; }
+    .service-title {
+      font-family: 'Noto Serif SC', serif;
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: var(--paper);
+      margin-bottom: 0.8rem;
+    }
+    .service-text {
+      font-size: 0.88rem;
+      color: #666;
+      line-height: 1.8;
+    }
+
+    /* ── PRODUCTS ── */
+    .products-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      flex-wrap: wrap;
+      gap: 2rem;
+      margin-bottom: 3.5rem;
+    }
+
+    .products-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1.5rem;
+    }
+
+    .product-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      overflow: hidden;
+      transition: transform 0.3s, box-shadow 0.3s;
+      cursor: pointer;
+    }
+    .product-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 20px 50px rgba(13,13,13,0.1);
+    }
+
+    .product-img-area {
+      height: 180px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 4rem;
+      position: relative;
+      overflow: hidden;
+    }
+    .product-img-area.apple-bg { background: linear-gradient(135deg, #f8f8f8, #ebebeb); }
+    .product-img-area.hw-bg { background: linear-gradient(135deg, #fff0ee, #ffddd9); }
+    .product-img-area.mi-bg { background: linear-gradient(135deg, #fff5f0, #ffe0cc); }
+    .product-img-area.lease-bg { background: linear-gradient(135deg, #f0f5ff, #dce8ff); }
+
+    .product-tag {
+      position: absolute;
+      top: 12px; right: 12px;
+      font-size: 0.65rem;
+      font-family: 'DM Mono', monospace;
+      letter-spacing: 0.08em;
+      padding: 4px 10px;
+      border-radius: 20px;
+    }
+    .tag-new { background: var(--accent); color: #fff; }
+    .tag-hot { background: var(--accent2); color: var(--ink); }
+    .tag-lease { background: var(--ink); color: var(--paper); }
+
+    .product-info { padding: 20px; }
+    .product-brand {
+      font-size: 0.72rem;
+      font-family: 'DM Mono', monospace;
+      color: var(--muted);
+      letter-spacing: 0.1em;
+      margin-bottom: 6px;
+    }
+    .product-name {
+      font-family: 'Noto Serif SC', serif;
+      font-size: 1rem;
+      font-weight: 700;
+      margin-bottom: 10px;
+    }
+    .product-pricing {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+    }
+    .product-price { color: var(--accent); font-weight: 700; font-size: 1rem; }
+    .product-lease { color: var(--muted); font-size: 0.8rem; }
+
+    /* ── HOW IT WORKS ── */
+    .how-section { background: #faf9f6; }
+    .steps-row {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 0;
+      margin-top: 4rem;
+      position: relative;
+    }
+    .steps-row::before {
+      content: '';
+      position: absolute;
+      top: 28px; left: 8%;
+      width: 84%;
+      height: 1px;
+      background: var(--border);
+      z-index: 0;
+    }
+
+    .step-item {
+      text-align: center;
+      padding: 0 20px;
+      position: relative;
+      z-index: 1;
+    }
+    .step-circle {
+      width: 56px; height: 56px;
+      border-radius: 50%;
+      border: 1.5px solid var(--border);
+      background: var(--paper);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'DM Mono', monospace;
+      font-size: 0.85rem;
+      color: var(--muted);
+      margin: 0 auto 1.5rem;
+      transition: background 0.3s, border-color 0.3s, color 0.3s;
+    }
+    .step-item:hover .step-circle {
+      background: var(--ink);
+      border-color: var(--ink);
+      color: var(--paper);
+    }
+    .step-title {
+      font-family: 'Noto Serif SC', serif;
+      font-weight: 700;
+      font-size: 1rem;
+      margin-bottom: 0.6rem;
+    }
+    .step-text { font-size: 0.85rem; color: var(--muted); line-height: 1.7; }
+
+    /* ── WHY US ── */
+    .why-section {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8vw;
+      align-items: center;
+      padding: 100px 5vw;
+    }
+    .why-list { margin-top: 2.5rem; display: flex; flex-direction: column; gap: 1.5rem; }
+    .why-item {
+      display: flex;
+      gap: 1.2rem;
+      align-items: flex-start;
+      padding: 20px;
+      border: 1px solid transparent;
+      border-radius: 4px;
+      transition: border-color 0.3s, background 0.3s;
+    }
+    .why-item:hover { border-color: var(--border); background: var(--card-bg); }
+    .why-icon {
+      width: 44px; height: 44px;
+      min-width: 44px;
+      background: var(--ink);
+      color: var(--paper);
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.1rem;
+    }
+    .why-content-title {
+      font-family: 'Noto Serif SC', serif;
+      font-weight: 700;
+      font-size: 1rem;
+      margin-bottom: 4px;
+    }
+    .why-content-text { font-size: 0.85rem; color: var(--muted); line-height: 1.7; }
+
+    .why-visual {
+      position: relative;
+      height: 480px;
+    }
+    .why-big-card {
+      position: absolute;
+      background: var(--ink);
+      color: var(--paper);
+      border-radius: 20px;
+      padding: 36px;
+      width: 280px;
+    }
+    .why-big-card-1 { top: 0; left: 0; }
+    .why-big-card-2 {
+      top: 140px; right: 0;
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      color: var(--ink);
+    }
+    .why-card-icon { font-size: 2rem; margin-bottom: 16px; }
+    .why-card-title {
+      font-family: 'Noto Serif SC', serif;
+      font-size: 1.1rem;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+    .why-card-text { font-size: 0.85rem; color: #888; line-height: 1.7; }
+    .why-big-card-1 .why-card-text { color: #888; }
+    .why-big-card-2 .why-card-text { color: var(--muted); }
+
+    /* ── TESTIMONIALS ── */
+    .testimonials-section { background: var(--ink); padding: 100px 5vw; }
+    .testimonials-section .section-label { color: var(--accent2); }
+    .testimonials-section .section-label::before { background: var(--accent2); }
+    .testimonials-section .section-title { color: var(--paper); }
+
+    .testimonials-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+      margin-top: 3.5rem;
+    }
+    .testimonial-card {
+      background: #141414;
+      border: 1px solid #222;
+      padding: 32px;
+      border-radius: 4px;
+      transition: border-color 0.3s;
+    }
+    .testimonial-card:hover { border-color: #444; }
+    .quote-mark {
+      font-family: 'Noto Serif SC', serif;
+      font-size: 3rem;
+      color: var(--accent);
+      line-height: 0.8;
+      margin-bottom: 16px;
+    }
+    .quote-text {
+      font-size: 0.92rem;
+      color: #aaa;
+      line-height: 1.8;
+      margin-bottom: 24px;
+    }
+    .quote-author {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .author-avatar {
+      width: 40px; height: 40px;
+      border-radius: 50%;
+      background: #333;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1rem;
+    }
+    .author-name {
+      font-weight: 600;
+      color: var(--paper);
+      font-size: 0.9rem;
+    }
+    .author-role { font-size: 0.75rem; color: #555; }
+
+    /* ── CTA BANNER ── */
+    .cta-banner {
+      padding: 80px 5vw;
+      background: var(--accent);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 2rem;
+    }
+    .cta-banner-title {
+      font-family: 'Noto Serif SC', serif;
+      font-size: clamp(1.5rem, 3vw, 2.2rem);
+      font-weight: 900;
+      color: #fff;
+      max-width: 560px;
+      line-height: 1.3;
+    }
+    .btn-white {
+      background: #fff;
+      color: var(--accent);
+      padding: 16px 36px;
+      border: none;
+      border-radius: 2px;
+      font-family: 'Noto Sans SC', sans-serif;
+      font-size: 0.95rem;
+      font-weight: 700;
+      cursor: pointer;
+      text-decoration: none;
+      white-space: nowrap;
+      transition: transform 0.2s;
+    }
+    .btn-white:hover { transform: translateY(-2px); }
+
+    /* ── FOOTER ── */
+    footer {
+      background: #0a0a0a;
+      color: #666;
+      padding: 60px 5vw 30px;
+    }
+    .footer-top {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr 1fr;
+      gap: 3rem;
+      padding-bottom: 40px;
+      border-bottom: 1px solid #1e1e1e;
+    }
+    .footer-brand-name {
+      font-family: 'Noto Serif SC', serif;
+      font-size: 1.2rem;
+      font-weight: 900;
+      color: var(--paper);
+      margin-bottom: 12px;
+    }
+    .footer-brand-desc { font-size: 0.85rem; line-height: 1.8; color: #555; }
+    .footer-col-title {
+      font-size: 0.8rem;
+      font-family: 'DM Mono', monospace;
+      letter-spacing: 0.12em;
+      color: #888;
+      text-transform: uppercase;
+      margin-bottom: 1.2rem;
+    }
+    .footer-links { list-style: none; display: flex; flex-direction: column; gap: 0.6rem; }
+    .footer-links a {
+      font-size: 0.88rem;
+      color: #555;
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .footer-links a:hover { color: var(--paper); }
+    .footer-bottom {
+      padding-top: 28px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.78rem;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+    .footer-bottom a { color: #444; text-decoration: none; }
+
+    /* ── ANIMATIONS ── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 1024px) {
+      .products-grid { grid-template-columns: repeat(2, 1fr); }
+      .hero { grid-template-columns: 1fr; min-height: auto; padding: 80px 5vw; }
+      .hero-right { display: none; }
+      .why-section { grid-template-columns: 1fr; }
+      .why-visual { display: none; }
+      .footer-top { grid-template-columns: 1fr 1fr; }
+    }
+    @media (max-width: 768px) {
+      .services-grid, .steps-row, .testimonials-grid { grid-template-columns: 1fr; }
+      .steps-row::before { display: none; }
+      .nav-links { display: none; }
+      .products-grid { grid-template-columns: 1fr 1fr; }
+    }
+    @media (max-width: 480px) {
+      .products-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <a href="#" class="nav-logo">
+      <span class="nav-logo-cn">长九科技</span>
+      <span class="nav-logo-dot"></span>
+    </a>
+    <ul class="nav-links">
+      <li><a href="#products">产品中心</a></li>
+      <li><a href="#services">服务方案</a></li>
+      <li><a href="#how">租赁流程</a></li>
+      <li><a href="#about">关于我们</a></li>
+      <li><a href="#contact" class="nav-cta">立即咨询</a></li>
+    </ul>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero" style="padding-top:80px;padding-bottom:80px;">
+    <div class="hero-grid-lines"></div>
+    <div class="hero-bg-circle"></div>
+
+    <div class="hero-left">
+      <div class="hero-eyebrow">上饶长九科技有限公司</div>
+      <h1 class="hero-title">
+        好机器<em>，</em><br/>
+        不一定要<em>买</em>
+      </h1>
+      <p class="hero-sub">
+        专注 3C 手机销售与租赁服务，苹果、华为、小米等大品牌正品保障，低门槛起租，让每个人都用上好手机。
+      </p>
+      <div class="hero-actions">
+        <a href="#products" class="btn-primary">浏览产品</a>
+        <a href="#how" class="btn-outline">了解租赁流程</a>
+      </div>
+      <div class="hero-stats">
+        <div class="stat-item">
+          <div class="stat-num">5000<span>+</span></div>
+          <div class="stat-label">服务客户数</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-num">3<span>大</span></div>
+          <div class="stat-label">合作品牌</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-num">99<span>%</span></div>
+          <div class="stat-label">用户好评率</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="hero-right">
+      <div class="phone-showcase">
+        <div class="phone-card phone-card-back">
+          <div class="phone-brand-label">HUAWEI</div>
+          <div class="phone-icon phone-icon-hw">🔴</div>
+          <div class="phone-name">Mate 60 Pro</div>
+          <div class="phone-price-tag">月租仅需 <strong>¥199</strong>/月</div>
+          <span class="phone-badge">爆款</span>
+        </div>
+        <div class="phone-card phone-card-main">
+          <div class="phone-brand-label">APPLE</div>
+          <div class="phone-icon phone-icon-apple">🍎</div>
+          <div class="phone-name">iPhone 16 Pro</div>
+          <div class="phone-price-tag">月租仅需 <strong>¥249</strong>/月</div>
+          <span class="phone-badge">热门在租</span>
+        </div>
+        <div class="floating-tag floating-tag-1">✓ 正品保障</div>
+        <div class="floating-tag floating-tag-2">⚡ 当天发货</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- BRANDS BAR -->
+  <div class="brands-bar">
+    <span class="brands-label">合作品牌</span>
+    <div class="brands-list">
+      <span class="brand-item active">Apple</span>
+      <span class="brand-item">HUAWEI</span>
+      <span class="brand-item">Xiaomi</span>
+      <span class="brand-item">OPPO</span>
+      <span class="brand-item">vivo</span>
+      <span class="brand-item">Samsung</span>
+    </div>
+  </div>
+
+  <!-- SERVICES -->
+  <section class="services-section" id="services">
+    <div>
+      <div class="section-label">核心服务</div>
+      <h2 class="section-title">灵活方案<br/>满足一切需求</h2>
+    </div>
+    <div class="services-grid">
+      <div class="service-card">
+        <div class="service-num">01</div>
+        <div class="service-icon">📱</div>
+        <div class="service-title">手机销售</div>
+        <div class="service-text">正品行货，全系列在售。苹果、华为、小米等主流品牌，货源稳定，价格透明，支持以旧换新。</div>
+      </div>
+      <div class="service-card">
+        <div class="service-num">02</div>
+        <div class="service-icon">🔄</div>
+        <div class="service-title">手机租赁</div>
+        <div class="service-text">按月计租，低门槛起步，无需大额购机成本。租期灵活，到期可续租、换新款或买断，随心选择。</div>
+      </div>
+      <div class="service-card">
+        <div class="service-num">03</div>
+        <div class="service-icon">🏢</div>
+        <div class="service-title">企业批量</div>
+        <div class="service-text">专为企业提供批量采购与租赁解决方案，支持统一配置、资产管理，降低企业 IT 硬件成本。</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PRODUCTS -->
+  <section id="products" style="padding:100px 5vw;">
+    <div class="products-header">
+      <div>
+        <div class="section-label">热门产品</div>
+        <h2 class="section-title">精选机型<br/>当季热款</h2>
+      </div>
+      <a href="#" class="btn-outline">查看全部 →</a>
+    </div>
+    <div class="products-grid">
+      <div class="product-card">
+        <div class="product-img-area apple-bg">
+          🍎
+          <span class="product-tag tag-new">NEW</span>
+        </div>
+        <div class="product-info">
+          <div class="product-brand">APPLE</div>
+          <div class="product-name">iPhone 16 Pro Max</div>
+          <div class="product-pricing">
+            <span class="product-price">¥9,999起</span>
+            <span class="product-lease">租赁 ¥299/月</span>
+          </div>
+        </div>
+      </div>
+      <div class="product-card">
+        <div class="product-img-area hw-bg">
+          🔴
+          <span class="product-tag tag-hot">热卖</span>
+        </div>
+        <div class="product-info">
+          <div class="product-brand">HUAWEI</div>
+          <div class="product-name">Mate 60 Pro+</div>
+          <div class="product-pricing">
+            <span class="product-price">¥7,999起</span>
+            <span class="product-lease">租赁 ¥199/月</span>
+          </div>
+        </div>
+      </div>
+      <div class="product-card">
+        <div class="product-img-area mi-bg">
+          🟠
+          <span class="product-tag tag-hot">热卖</span>
+        </div>
+        <div class="product-info">
+          <div class="product-brand">XIAOMI</div>
+          <div class="product-name">小米 15 Ultra</div>
+          <div class="product-pricing">
+            <span class="product-price">¥6,499起</span>
+            <span class="product-lease">租赁 ¥159/月</span>
+          </div>
+        </div>
+      </div>
+      <div class="product-card">
+        <div class="product-img-area lease-bg">
+          💼
+          <span class="product-tag tag-lease">企业专属</span>
+        </div>
+        <div class="product-info">
+          <div class="product-brand">ENTERPRISE</div>
+          <div class="product-name">企业批量定制方案</div>
+          <div class="product-pricing">
+            <span class="product-price">按需报价</span>
+            <span class="product-lease">联系客服</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- HOW IT WORKS -->
+  <section class="how-section" id="how">
+    <div style="text-align:center;max-width:500px;margin:0 auto;">
+      <div class="section-label" style="justify-content:center;">租赁流程</div>
+      <h2 class="section-title">四步完成租机<br/>最快当天到手</h2>
+    </div>
+    <div class="steps-row">
+      <div class="step-item">
+        <div class="step-circle">01</div>
+        <div class="step-title">选择机型</div>
+        <div class="step-text">浏览在线产品库，选定心仪机型及租期方案</div>
+      </div>
+      <div class="step-item">
+        <div class="step-circle">02</div>
+        <div class="step-title">提交申请</div>
+        <div class="step-text">填写个人信息完成实名认证，在线签署电子合同</div>
+      </div>
+      <div class="step-item">
+        <div class="step-circle">03</div>
+        <div class="step-title">极速发货</div>
+        <div class="step-text">审核通过后当天发货，支持顺丰快递全国配送</div>
+      </div>
+      <div class="step-item">
+        <div class="step-circle">04</div>
+        <div class="step-title">按月归还</div>
+        <div class="step-text">到期退还或选择续租买断，全程无忧售后保障</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- WHY US -->
+  <section class="why-section" id="about">
+    <div>
+      <div class="section-label">为何选择我们</div>
+      <h2 class="section-title">用心服务<br/>值得信赖</h2>
+      <p class="section-desc">上饶长九科技深耕 3C 手机行业多年，坚持正品、透明、贴心的服务理念，让每位客户放心消费。</p>
+      <div class="why-list">
+        <div class="why-item">
+          <div class="why-icon">✓</div>
+          <div>
+            <div class="why-content-title">100% 正品保障</div>
+            <div class="why-content-text">全部产品均来自品牌官方授权渠道，拒绝翻新机与水货，购买即享全国联保。</div>
+          </div>
+        </div>
+        <div class="why-item">
+          <div class="why-icon">⚡</div>
+          <div>
+            <div class="why-content-title">极速发货 · 当日达</div>
+            <div class="why-content-text">下单审核通过后当日发出，顺丰速运覆盖全国，急用不等待。</div>
+          </div>
+        </div>
+        <div class="why-item">
+          <div class="why-icon">🔒</div>
+          <div>
+            <div class="why-content-title">灵活租期无压力</div>
+            <div class="why-content-text">支持 1 个月起租，随时可申请换机或提前买断，租机方案灵活自由。</div>
+          </div>
+        </div>
+        <div class="why-item">
+          <div class="why-icon">💬</div>
+          <div>
+            <div class="why-content-title">专业售后全程跟进</div>
+            <div class="why-content-text">7×12 小时专属客服，租赁期内设备故障免费维修或换新，无后顾之忧。</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="why-visual">
+      <div class="why-big-card why-big-card-1">
+        <div class="why-card-icon">📦</div>
+        <div class="why-card-title">当日发货承诺</div>
+        <div class="why-card-text">审核通过 2 小时内打包出库，顺丰保价寄送，全程可追踪。</div>
+      </div>
+      <div class="why-big-card why-big-card-2">
+        <div class="why-card-icon">🏆</div>
+        <div class="why-card-title">年度优质商家</div>
+        <div class="why-card-text">连续三年获得平台优质认证，好评率 99%，累计服务客户超 5000 人。</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TESTIMONIALS -->
+  <section class="testimonials-section">
+    <div class="section-label">客户评价</div>
+    <h2 class="section-title">他们都在说</h2>
+    <div class="testimonials-grid">
+      <div class="testimonial-card">
+        <div class="quote-mark">"</div>
+        <div class="quote-text">租了一台 iPhone 16，从申请到收货不到两天，包装完好，手机全新。租赁方案很灵活，完全不像传统买机那么有压力。</div>
+        <div class="quote-author">
+          <div class="author-avatar">👨</div>
+          <div>
+            <div class="author-name">张先生</div>
+            <div class="author-role">个人用户 · 上饶</div>
+          </div>
+        </div>
+      </div>
+      <div class="testimonial-card">
+        <div class="quote-mark">"</div>
+        <div class="quote-text">公司统一配了 50 台华为手机，长九科技对接非常专业，给出了很好的批量价格，交付及时，后续资产管理也很顺畅。</div>
+        <div class="quote-author">
+          <div class="author-avatar">👩</div>
+          <div>
+            <div class="author-name">李女士</div>
+            <div class="author-role">企业采购 · 南昌</div>
+          </div>
+        </div>
+      </div>
+      <div class="testimonial-card">
+        <div class="quote-mark">"</div>
+        <div class="quote-text">客服响应特别快，中途手机出了点小问题，直接帮我换了新机，完全免费。这个服务体验比直接买还要好！</div>
+        <div class="quote-author">
+          <div class="author-avatar">🧑</div>
+          <div>
+            <div class="author-name">王同学</div>
+            <div class="author-role">在校学生 · 景德镇</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA BANNER -->
+  <div class="cta-banner" id="contact">
+    <div class="cta-banner-title">准备好换一台新手机了吗？<br/>立即咨询，专属方案等你来定。</div>
+    <a href="tel:400-000-0000" class="btn-white">📞 免费咨询</a>
+  </div>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-top">
+      <div>
+        <div class="footer-brand-name">上饶长九科技有限公司</div>
+        <div class="footer-brand-desc">专注 3C 手机销售与租赁，正品保障，灵活方案，让每个人都用上好手机。</div>
+      </div>
+      <div>
+        <div class="footer-col-title">快速导航</div>
+        <ul class="footer-links">
+          <li><a href="#products">产品中心</a></li>
+          <li><a href="#services">服务方案</a></li>
+          <li><a href="#how">租赁流程</a></li>
+          <li><a href="#about">关于我们</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="footer-col-title">合作品牌</div>
+        <ul class="footer-links">
+          <li><a href="#">Apple</a></li>
+          <li><a href="#">HUAWEI</a></li>
+          <li><a href="#">Xiaomi</a></li>
+          <li><a href="#">OPPO / vivo</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="footer-col-title">联系我们</div>
+        <ul class="footer-links">
+          <li><a href="#">📍 江西省上饶市</a></li>
+          <li><a href="tel:400-000-0000">📞 400-000-0000</a></li>
+          <li><a href="#">📧 service@cj9tech.com</a></li>
+          <li><a href="#">💬 微信客服</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2025 上饶长九科技有限公司 · Shangrao Changjiu Technology Co., Ltd.</span>
+      <span><a href="#">隐私政策</a> · <a href="#">用户协议</a></span>
+    </div>
+  </footer>
+
+</body>
+</html>
