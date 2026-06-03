@@ -933,6 +933,7 @@
     }
     .platform-pill:hover { background: var(--ink); color: var(--paper); border-color: var(--ink); }
     .platform-pill:hover img { filter: brightness(0) invert(1); }
+    .platform-pill:hover svg { opacity: 0.9; }
 
     @media (max-width: 1024px) {
       .company-inner { grid-template-columns: 1fr; }
@@ -1623,27 +1624,61 @@
         <div class="platforms-label">官方入驻平台</div>
         <div class="platforms-grid">
           <div class="platform-pill">
-            <img src="https://gw.alipayobjects.com/zos/rmsportal/KDpgvguMpGfqaHPjicRK.svg" alt="支付宝" onerror="this.style.display='none'" />
+            <!-- 支付宝官方蓝 #1677FF -->
+            <svg width="36" height="36" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <rect width="36" height="36" rx="8" fill="#1677FF"/>
+              <path d="M18 7C12.477 7 8 11.477 8 17c0 3.5 1.79 6.59 4.5 8.41-1.01-.42-2.17-.91-3.31-1.41C9.73 25.76 10 27 11.19 27.76c1.19.77 3.2.24 5.14-.67C17.13 27.69 17.56 28 18 28c5.523 0 10-4.477 10-10S23.523 7 18 7z" fill="white"/>
+              <path d="M20.5 16.5c.83-.42 1.5-1.08 1.5-2 0-1.38-1.34-2.5-3-2.5h-4v8h4.5c1.93 0 3.5-1.12 3.5-2.5 0-1-.7-1.79-2.5-1zm-3.5-3h2c.55 0 1 .45 1 1s-.45 1-1 1H17v-2zm2.5 5H17v-2h2.5c.55 0 1 .45 1 1s-.45 1-1 1z" fill="#1677FF"/>
+            </svg>
             支付宝
           </div>
           <div class="platform-pill">
-            <img src="https://static.360buyimg.com/mtd/pc/common/images/favicon@2x.ico" alt="京东" onerror="this.style.display='none'" />
+            <!-- 京东官方红 #E1251B -->
+            <svg width="36" height="36" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <rect width="36" height="36" rx="8" fill="#E1251B"/>
+              <path d="M10 11h3v8.5c0 .83.67 1.5 1.5 1.5s1.5-.67 1.5-1.5V11h3v8.5c0 2.49-2.01 4.5-4.5 4.5S10 21.99 10 19.5V11z" fill="white"/>
+              <path d="M20 11h3v3h3v3h-3v3.5c0 .28.22.5.5.5H26v3h-3c-1.66 0-3-1.34-3-3V11z" fill="white"/>
+              <rect x="10" y="24" width="16" height="2" rx="1" fill="white"/>
+            </svg>
             京东
           </div>
           <div class="platform-pill">
-            <img src="https://www.renrenzujie.com/favicon.ico" alt="人人租" onerror="this.style.background='#f60';this.style.borderRadius='8px';" />
+            <!-- 人人租 橙色 -->
+            <svg width="36" height="36" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <rect width="36" height="36" rx="8" fill="#FF6A00"/>
+              <text x="18" y="24" font-family="Arial,sans-serif" font-size="14" font-weight="900" fill="white" text-anchor="middle">人人</text>
+            </svg>
             人人租
           </div>
           <div class="platform-pill">
-            <img src="https://www.aizuji.com/favicon.ico" alt="爱租机" onerror="this.style.display='none'" />
+            <!-- 爱租机 蓝色 -->
+            <svg width="36" height="36" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <rect width="36" height="36" rx="8" fill="#0A6EFF"/>
+              <text x="18" y="24" font-family="Arial,sans-serif" font-size="14" font-weight="900" fill="white" text-anchor="middle">爱租</text>
+            </svg>
             爱租机
           </div>
           <div class="platform-pill">
-            <img src="https://www.00zulin.com/favicon.ico" alt="零零享租" onerror="this.style.display='none'" />
+            <!-- 零零享租 紫色 -->
+            <svg width="36" height="36" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <rect width="36" height="36" rx="8" fill="#6C3FE8"/>
+              <text x="18" y="24" font-family="Arial,sans-serif" font-size="14" font-weight="900" fill="white" text-anchor="middle">零零</text>
+            </svg>
             零零享租
           </div>
           <div class="platform-pill">
-            <img src="https://gw.alicdn.com/imgextra/i4/O1CN01JWHBdP1M06bMkLmMT_!!6000000001381-55-tps-64-64.svg" alt="闲鱼" onerror="this.style.display='none'" />
+            <!-- 闲鱼官方橙黄色 #FFBA00 -->
+            <svg width="36" height="36" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <rect width="36" height="36" rx="8" fill="#FFBA00"/>
+              <!-- 鱼身 -->
+              <ellipse cx="17" cy="18" rx="7.5" ry="5" fill="white"/>
+              <!-- 鱼尾 -->
+              <path d="M24.5 18 L29 14 L29 22 Z" fill="white"/>
+              <!-- 鱼眼 -->
+              <circle cx="12.5" cy="17" r="1.5" fill="#FFBA00"/>
+              <!-- 鱼嘴波浪 -->
+              <path d="M9 20.5 Q11 22.5 13 20.5 Q15 18.5 17 20.5" stroke="white" stroke-width="1.3" stroke-linecap="round" fill="none"/>
+            </svg>
             闲鱼
           </div>
         </div>
