@@ -299,11 +299,12 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 1.6rem;
       margin-bottom: 16px;
+      overflow: hidden;
     }
+    .phone-icon img { width: 40px; height: 40px; object-fit: contain; }
     .phone-icon-apple { background: #f0f0f0; }
-    .phone-icon-hw { background: #c8392b; }
+    .phone-icon-hw { background: #fff; }
 
     .phone-name {
       font-family: 'Noto Serif SC', serif;
@@ -377,14 +378,24 @@
       flex-wrap: wrap;
     }
     .brand-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
       font-family: 'Noto Serif SC', serif;
       font-weight: 700;
-      font-size: 1.1rem;
+      font-size: 1rem;
       color: var(--muted);
-      letter-spacing: 0.05em;
+      letter-spacing: 0.04em;
       transition: color 0.2s;
       cursor: default;
     }
+    .brand-item img {
+      width: 28px; height: 28px;
+      object-fit: contain;
+      filter: grayscale(100%) opacity(0.5);
+      transition: filter 0.3s;
+    }
+    .brand-item:hover img, .brand-item.active img { filter: grayscale(0%) opacity(1); }
     .brand-item:hover { color: var(--ink); }
     .brand-item.active { color: var(--ink); }
 
@@ -505,9 +516,12 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 4rem;
       position: relative;
       overflow: hidden;
+    }
+    .product-img-area img.brand-logo {
+      width: 90px; height: 90px;
+      object-fit: contain;
     }
     .product-img-area.apple-bg { background: linear-gradient(135deg, #f8f8f8, #ebebeb); }
     .product-img-area.hw-bg { background: linear-gradient(135deg, #fff0ee, #ffddd9); }
@@ -805,6 +819,130 @@
     }
     .footer-bottom a { color: #444; text-decoration: none; }
 
+    /* ── ABOUT / COMPANY ── */
+    .company-section {
+      padding: 100px 5vw;
+      background: var(--paper);
+    }
+    .company-inner {
+      display: grid;
+      grid-template-columns: 1fr 1.4fr;
+      gap: 8vw;
+      align-items: start;
+    }
+    .company-left { position: sticky; top: 90px; }
+    .company-tag {
+      display: inline-block;
+      background: var(--accent);
+      color: #fff;
+      font-family: 'DM Mono', monospace;
+      font-size: 0.68rem;
+      letter-spacing: 0.12em;
+      padding: 5px 14px;
+      border-radius: 20px;
+      margin-bottom: 1.5rem;
+    }
+    .company-headline {
+      font-family: 'Noto Serif SC', serif;
+      font-weight: 900;
+      font-size: clamp(1.8rem, 2.8vw, 2.5rem);
+      line-height: 1.2;
+      color: var(--ink);
+      margin-bottom: 1.5rem;
+    }
+    .company-motto {
+      font-family: 'Noto Serif SC', serif;
+      font-size: 1rem;
+      color: var(--muted);
+      line-height: 1.9;
+      border-left: 3px solid var(--accent);
+      padding-left: 1.2rem;
+      margin-top: 2rem;
+      font-style: italic;
+    }
+
+    .company-right {}
+    .company-para {
+      font-size: 0.95rem;
+      color: #555;
+      line-height: 2;
+      margin-bottom: 1.6rem;
+    }
+    .company-para strong { color: var(--ink); font-weight: 600; }
+
+    .company-highlights {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+      margin: 2.5rem 0;
+    }
+    .company-highlight-item {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 20px;
+      transition: border-color 0.3s, box-shadow 0.3s;
+    }
+    .company-highlight-item:hover {
+      border-color: var(--accent);
+      box-shadow: 0 4px 20px rgba(200,57,43,0.08);
+    }
+    .ch-num {
+      font-family: 'Noto Serif SC', serif;
+      font-size: 1.8rem;
+      font-weight: 900;
+      color: var(--accent);
+      line-height: 1;
+      margin-bottom: 4px;
+    }
+    .ch-label { font-size: 0.82rem; color: var(--muted); }
+
+    .platforms-label {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.72rem;
+      letter-spacing: 0.14em;
+      color: var(--muted);
+      text-transform: uppercase;
+      margin-bottom: 1rem;
+      margin-top: 2rem;
+    }
+    .platforms-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+    }
+    .platform-pill {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 14px 10px;
+      text-align: center;
+      font-size: 0.82rem;
+      font-weight: 500;
+      color: var(--ink);
+      transition: background 0.25s, border-color 0.25s, color 0.25s;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+    }
+    .platform-pill img {
+      width: 36px; height: 36px;
+      object-fit: contain;
+      border-radius: 8px;
+    }
+    .platform-pill:hover { background: var(--ink); color: var(--paper); border-color: var(--ink); }
+    .platform-pill:hover img { filter: brightness(0) invert(1); }
+
+    @media (max-width: 1024px) {
+      .company-inner { grid-template-columns: 1fr; }
+      .company-left { position: static; }
+    }
+    @media (max-width: 600px) {
+      .company-highlights { grid-template-columns: 1fr 1fr; }
+      .platforms-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+
     /* ── ANIMATIONS ── */
     @keyframes fadeUp {
       from { opacity: 0; transform: translateY(20px); }
@@ -847,7 +985,8 @@
       <li><a href="#products">产品中心</a></li>
       <li><a href="#services">服务方案</a></li>
       <li><a href="#how">租赁流程</a></li>
-      <li><a href="#about">关于我们</a></li>
+      <li><a href="#about">为何选择我们</a></li>
+      <li><a href="#company">关于我们</a></li>
       <li><a href="#contact" class="nav-cta">立即咨询</a></li>
     </ul>
   </nav>
@@ -890,14 +1029,18 @@
       <div class="phone-showcase">
         <div class="phone-card phone-card-back">
           <div class="phone-brand-label">HUAWEI</div>
-          <div class="phone-icon phone-icon-hw">🔴</div>
+          <div class="phone-icon phone-icon-hw">
+            <img src="https://consumer.huawei.com/etc/designs/huawei-cbg-site/clientlib-campaignsite/images/favicons/favicon-32x32.png" alt="Huawei" style="width:36px;height:36px;object-fit:contain;" />
+          </div>
           <div class="phone-name">Mate 60 Pro</div>
           <div class="phone-price-tag">月租仅需 <strong>¥199</strong>/月</div>
           <span class="phone-badge">爆款</span>
         </div>
         <div class="phone-card phone-card-main">
           <div class="phone-brand-label">APPLE</div>
-          <div class="phone-icon phone-icon-apple">🍎</div>
+          <div class="phone-icon phone-icon-apple">
+            <img src="https://www.apple.com/favicon.ico" alt="Apple" style="width:36px;height:36px;object-fit:contain;" />
+          </div>
           <div class="phone-name">iPhone 16 Pro</div>
           <div class="phone-price-tag">月租仅需 <strong>¥249</strong>/月</div>
           <span class="phone-badge">热门在租</span>
@@ -912,12 +1055,30 @@
   <div class="brands-bar">
     <span class="brands-label">合作品牌</span>
     <div class="brands-list">
-      <span class="brand-item active">Apple</span>
-      <span class="brand-item">HUAWEI</span>
-      <span class="brand-item">Xiaomi</span>
-      <span class="brand-item">OPPO</span>
-      <span class="brand-item">vivo</span>
-      <span class="brand-item">Samsung</span>
+      <span class="brand-item active">
+        <img src="https://www.apple.com/favicon.ico" alt="Apple" />
+        Apple
+      </span>
+      <span class="brand-item">
+        <img src="https://consumer.huawei.com/etc/designs/huawei-cbg-site/clientlib-campaignsite/images/favicons/favicon-32x32.png" alt="HUAWEI" />
+        HUAWEI
+      </span>
+      <span class="brand-item">
+        <img src="https://i01.appmifile.com/webfile/globalimg/mi_logo/mi-logo.png" alt="Xiaomi" style="border-radius:4px;" />
+        Xiaomi
+      </span>
+      <span class="brand-item">
+        <img src="https://www.oppo.com/favicon.ico" alt="OPPO" />
+        OPPO
+      </span>
+      <span class="brand-item">
+        <img src="https://www.vivo.com/favicon.ico" alt="vivo" />
+        vivo
+      </span>
+      <span class="brand-item">
+        <img src="https://www.samsung.com/favicon.ico" alt="Samsung" />
+        Samsung
+      </span>
     </div>
   </div>
 
@@ -961,7 +1122,7 @@
     <div class="products-grid">
       <div class="product-card">
         <div class="product-img-area apple-bg">
-          🍎
+          <img class="brand-logo" src="https://upload.wikimedia.org/wikipedia/commons/f/fa/Apple_logo_black.svg" alt="Apple" />
           <span class="product-tag tag-new">NEW</span>
         </div>
         <div class="product-info">
@@ -975,7 +1136,7 @@
       </div>
       <div class="product-card">
         <div class="product-img-area hw-bg">
-          🔴
+          <img class="brand-logo" src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/56/Huawei_Standard_logo.svg/2560px-Huawei_Standard_logo.svg.png" alt="Huawei" style="width:120px;height:auto;" />
           <span class="product-tag tag-hot">热卖</span>
         </div>
         <div class="product-info">
@@ -989,7 +1150,7 @@
       </div>
       <div class="product-card">
         <div class="product-img-area mi-bg">
-          🟠
+          <img class="brand-logo" src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/29/Xiaomi_logo.svg/2560px-Xiaomi_logo.svg.png" alt="Xiaomi" style="width:110px;height:auto;" />
           <span class="product-tag tag-hot">热卖</span>
         </div>
         <div class="product-info">
@@ -1003,7 +1164,7 @@
       </div>
       <div class="product-card">
         <div class="product-img-area lease-bg">
-          💼
+          <img class="brand-logo" src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/ef/OPPO_LOGO_2019.svg/2560px-OPPO_LOGO_2019.svg.png" alt="OPPO" style="width:110px;height:auto;" />
           <span class="product-tag tag-lease">企业专属</span>
         </div>
         <div class="product-info">
@@ -1140,6 +1301,80 @@
     </div>
   </section>
 
+  <!-- ABOUT / COMPANY -->
+  <section class="company-section" id="company">
+    <div class="company-inner">
+      <div class="company-left">
+        <span class="company-tag">关于我们</span>
+        <h2 class="company-headline">扎根上饶<br/>服务全国</h2>
+        <p class="company-motto">
+          "好机器，不必高价买，<br/>人人轻松用上旗舰数码"
+        </p>
+      </div>
+      <div class="company-right">
+        <p class="company-para">
+          上饶长九科技有限公司扎根江西上饶，是国内深耕 <strong>3C 数码正品销售、信用免押租赁</strong>的专业化服务商，聚焦苹果、华为、小米、OPPO、vivo、三星等全品牌手机及智能数码产品，围绕个人用户、政企单位打造「新机零售、以旧换新、按月租赁、企业批量集采」一体化服务方案。
+        </p>
+        <p class="company-para">
+          公司深耕 3C 数码租赁行业多年，坚持<strong>全品类国行正品、官方货源直供</strong>，所有设备均源自品牌正规授权渠道，享受全国联保服务，杜绝翻新、水货机型。依托成熟供应链与完善风控体系，灵活落地低门槛月租模式，支持 <strong>1 个月起租、到期续租、换新、买断</strong>多元选择，大幅降低用户使用高端数码的资金压力。
+        </p>
+        <p class="company-para">
+          目前企业已深度达成<strong>支付宝、京东、人人租、爱租机、零零享租、闲鱼</strong>六大头部平台官方入驻合作，全渠道打通信用免押体系，依托芝麻信用风控能力，资质达标用户可 <strong>0 押金租机</strong>，线上线下全链路标准化运营。
+        </p>
+        <p class="company-para">
+          服务体系上，公司实行审核通过<strong>当日发货、顺丰全国速运、7×12 小时专属客服、租期内故障免费换新维修</strong>全链条售后，兼顾个人日常用机、企业批量办公采购等多元化场景，以透明定价、灵活方案、正品保障为核心。
+        </p>
+
+        <div class="company-highlights">
+          <div class="company-highlight-item">
+            <div class="ch-num">5000<span style="font-size:1.2rem">+</span></div>
+            <div class="ch-label">累计服务个人客户</div>
+          </div>
+          <div class="company-highlight-item">
+            <div class="ch-num">99<span style="font-size:1.2rem">%</span></div>
+            <div class="ch-label">用户好评率</div>
+          </div>
+          <div class="company-highlight-item">
+            <div class="ch-num">6<span style="font-size:1.2rem">大</span></div>
+            <div class="ch-label">头部平台官方入驻</div>
+          </div>
+          <div class="company-highlight-item">
+            <div class="ch-num">0</div>
+            <div class="ch-label">押金·信用免押租机</div>
+          </div>
+        </div>
+
+        <div class="platforms-label">官方入驻平台</div>
+        <div class="platforms-grid">
+          <div class="platform-pill">
+            <img src="https://gw.alipayobjects.com/zos/rmsportal/KDpgvguMpGfqaHPjicRK.svg" alt="支付宝" onerror="this.style.display='none'" />
+            支付宝
+          </div>
+          <div class="platform-pill">
+            <img src="https://static.360buyimg.com/mtd/pc/common/images/favicon@2x.ico" alt="京东" onerror="this.style.display='none'" />
+            京东
+          </div>
+          <div class="platform-pill">
+            <img src="https://www.renrenzujie.com/favicon.ico" alt="人人租" onerror="this.style.background='#f60';this.style.borderRadius='8px';" />
+            人人租
+          </div>
+          <div class="platform-pill">
+            <img src="https://www.aizuji.com/favicon.ico" alt="爱租机" onerror="this.style.display='none'" />
+            爱租机
+          </div>
+          <div class="platform-pill">
+            <img src="https://www.00zulin.com/favicon.ico" alt="零零享租" onerror="this.style.display='none'" />
+            零零享租
+          </div>
+          <div class="platform-pill">
+            <img src="https://gw.alicdn.com/imgextra/i4/O1CN01JWHBdP1M06bMkLmMT_!!6000000001381-55-tps-64-64.svg" alt="闲鱼" onerror="this.style.display='none'" />
+            闲鱼
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <!-- CTA BANNER -->
   <div class="cta-banner" id="contact">
     <div class="cta-banner-title">准备好换一台新手机了吗？<br/>立即咨询，专属方案等你来定。</div>
@@ -1159,7 +1394,8 @@
           <li><a href="#products">产品中心</a></li>
           <li><a href="#services">服务方案</a></li>
           <li><a href="#how">租赁流程</a></li>
-          <li><a href="#about">关于我们</a></li>
+          <li><a href="#about">为何选择我们</a></li>
+          <li><a href="#company">关于我们</a></li>
         </ul>
       </div>
       <div>
@@ -1176,16 +1412,32 @@
         <ul class="footer-links">
           <li><a href="#">📍 江西省上饶市</a></li>
           <li><a href="tel:400-000-0000">📞 400-000-0000</a></li>
-          <li><a href="#">📧 service@cj9tech.com</a></li>
+          <li><a href="mailto:business@srcjkj.com">📧 business@srcjkj.com</a></li>
           <li><a href="#">💬 微信客服</a></li>
         </ul>
       </div>
     </div>
     <div class="footer-bottom">
-      <span>© 2025 上饶长九科技有限公司 · Shangrao Changjiu Technology Co., Ltd.</span>
+      <span>© 2025 上饶长九科技有限公司 · 赣ICP备XXXXXXXX号</span>
       <span><a href="#">隐私政策</a> · <a href="#">用户协议</a></span>
     </div>
   </footer>
 
 </body>
+<script>
+  // Fallback: if any brand/platform logo fails to load, show colored initial badge
+  document.querySelectorAll('.platform-pill img, .brand-item img').forEach(img => {
+    img.addEventListener('error', function() {
+      const pill = this.closest('.platform-pill') || this.closest('.brand-item');
+      const text = (pill.textContent || pill.innerText).trim().charAt(0);
+      const colors = ['#1677FF','#E00','#FF4E00','#00A651','#1DA1F2','#F5A623'];
+      const color = colors[Math.floor(Math.random()*colors.length)];
+      const badge = document.createElement('span');
+      badge.style.cssText = `display:inline-flex;align-items:center;justify-content:center;width:36px;height:36px;border-radius:8px;background:${color};color:#fff;font-weight:700;font-size:1rem;`;
+      badge.textContent = text;
+      this.parentNode.replaceChild(badge, this);
+    });
+  });
+</script>
+
 </html>
